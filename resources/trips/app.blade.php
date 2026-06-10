@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>WanderPlan — @yield('title', 'Perencana Perjalanan')</title>
+  <title>Travel Planner — @yield('title', 'Perencana Perjalanan')</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
@@ -100,7 +100,7 @@
 <aside class="sidebar">
   <div class="sidebar-brand">
     <div class="brand-logo"><i class="ti ti-compass"></i></div>
-    <span class="brand-name">WanderPlan</span>
+    <span class="brand-name">Travel Planner</span>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Menu</div>
@@ -127,7 +127,7 @@
 
 <div class="main-wrapper">
   <header class="topbar">
-    <div class="topbar-title">@yield('page-title', 'WanderPlan')</div>
+    <div class="topbar-title">@yield('page-title', 'Travel Planner')</div>
     <div class="topbar-actions">
       <a href="{{ route('trips.create') }}" class="btn-primary sm"><i class="ti ti-plus"></i> Trip Baru</a>
       <div class="avatar">WP</div>

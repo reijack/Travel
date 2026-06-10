@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>WanderPlan — @yield('title', 'Perencana Perjalanan')</title>
+  <title>Travel Planner — @yield('title', 'Perencana Perjalanan')</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
   <style>
@@ -41,8 +41,12 @@
     .topbar{height:62px;background:#fff;border-bottom:1px solid var(--gray2);display:flex;align-items:center;padding:0 28px;gap:16px;position:sticky;top:0;z-index:50;box-shadow:0 1px 3px rgba(0,0,0,.06)}
     .topbar-title{font-size:17px;font-weight:500;flex:1}
     .topbar-actions{display:flex;align-items:center;gap:8px}
+    .user-menu{display:flex;align-items:center;gap:10px}
+    .user-name{font-size:13px;color:var(--text-muted)}
+    .logout-btn{background:none;border:1px solid var(--gray3);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text-muted);font-family:var(--ff-body);transition:all .18s}
+    .logout-btn:hover{background:var(--gray1);color:var(--text)}
     .avatar{width:36px;height:36px;background:var(--forest);border-radius:50%;color:#fff;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center}
-    .content{flex:1;padding:28px 32px 48px}
+    .content{flex:1;padding:28px 32px 48px;min-width:0;overflow-x:hidden}
     .alert{padding:12px 18px;border-radius:12px;margin-bottom:20px;font-size:14px;display:flex;align-items:center;gap:10px}
     .alert-success{background:#F0FDF4;color:#15803D;border:1px solid #BBF7D0}
     .alert-error{background:#FEF2F2;color:#B91C1C;border:1px solid #FCA5A5}
@@ -73,7 +77,7 @@
 <aside class="sidebar">
   <div class="sidebar-brand">
     <div class="brand-logo"><i class="ti ti-compass"></i></div>
-    <span class="brand-name">WanderPlan</span>
+    <span class="brand-name">Travel Planner</span>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Menu</div>
@@ -99,10 +103,16 @@
 </aside>
 <div class="main-wrapper">
   <header class="topbar">
-    <div class="topbar-title">@yield('page-title', 'WanderPlan')</div>
+    <div class="topbar-title">@yield('page-title', 'Travel Planner')</div>
     <div class="topbar-actions">
       <a href="{{ route('trips.create') }}" class="btn-primary sm"><i class="ti ti-plus"></i> Trip Baru</a>
-      <div class="avatar">WP</div>
+      <div class="user-menu">
+        <span class="user-name">{{ Auth::user()->name }}</span>
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="logout-btn">Keluar</button>
+        </form>
+      </div>
     </div>
   </header>
   <main class="content">

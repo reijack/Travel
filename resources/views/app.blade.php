@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>WanderPlan — @yield('title', 'Perencana Perjalanan')</title>
+  <title>Travel Planner — @yield('title', 'Perencana Perjalanan')</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
@@ -36,7 +36,7 @@
     .nav-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);padding:0 10px;margin-bottom:6px}
     .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:rgba(255,255,255,.65);text-decoration:none;font-size:14px;margin-bottom:2px;transition:all .18s}
     .nav-item i{font-size:18px}
-    .nav-item:hover{background:rgba(255,255,255,.1);color:#fff}
+    .nav-item:hover{background:rgba(167, 47, 47, 0.1);color:#fff}
     .nav-item.active{background:var(--gold);color:var(--forest);font-weight:500}
     .sidebar-trips{padding:18px 12px 24px;border-top:1px solid rgba(255,255,255,.1);margin-top:auto}
     .trip-pill{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;margin-bottom:4px;transition:background .18s;text-decoration:none}
@@ -100,7 +100,7 @@
 <aside class="sidebar">
   <div class="sidebar-brand">
     <div class="brand-logo"><i class="ti ti-compass"></i></div>
-    <span class="brand-name">WanderPlan</span>
+    <span class="brand-name">Travel Planner</span>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Menu</div>
@@ -127,7 +127,7 @@
 
 <div class="main-wrapper">
   <header class="topbar">
-    <div class="topbar-title">@yield('page-title', 'WanderPlan')</div>
+    <div class="topbar-title">@yield('page-title', 'Travel Planner')</div>
     <div class="topbar-actions">
       <a href="{{ route('trips.create') }}" class="btn-primary sm"><i class="ti ti-plus"></i> Trip Baru</a>
       <div class="avatar">WP</div>

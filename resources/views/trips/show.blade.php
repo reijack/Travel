@@ -60,6 +60,8 @@
   .photo-card{background:#fff;border-radius:12px;border:1px solid var(--gray2);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
   .photo-card img{width:100%;height:160px;object-fit:cover}
   .photo-info{padding:12px}
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 </style>
 @endpush
 
@@ -166,22 +168,44 @@
   @endfor
 </div>
 
-{{-- BUDGET --}}
+
+</div>{{-- BUDGET --}}
 <div class="tab-content" id="tab-budget">
-  @php $totalEst=$budgets->sum('estimated'); @endphp
-  <div class="bt-box">
-    <div class="bt-lbl">Total Estimasi Budget</div>
-    <div class="bt-val">Rp {{ number_format($totalEst) }}</div>
+  @php
+    $totalEst = $budgets->sum('estimated');
+    $perOrang = $trip->people > 0 ? $totalEst / $trip->people : 0;
+  @endphp
+
+  <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;width:100%">
+    <div style="flex:1;background:var(--forest);border-radius:12px;padding:22px 26px;color:#fff">
+      <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:4px">Total Estimasi Budget</div>
+      <div style="font-family:var(--ff-display);font-size:30px;font-weight:600">Rp {{ number_format($totalEst) }}</div>
+    </div>
+    <div style="flex:1;background:#C1440E;border-radius:12px;padding:22px 26px;color:#fff">
+      <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:4px">Per Orang ({{ $trip->people }} orang)</div>
+      <div style="font-family:var(--ff-display);font-size:30px;font-weight:600">Rp {{ number_format($perOrang) }}</div>
+    </div>
   </div>
-  <div class="budget-table-wrap">
+
+  <div class="budget-table-wrap" style="margin-bottom:20px">
     <table class="budget-table">
-      <thead><tr><th>Kategori</th><th>Keterangan</th><th>Estimasi</th><th>Aktual</th><th></th></tr></thead>
+      <thead>
+        <tr>
+          <th>Kategori</th>
+          <th>Keterangan</th>
+          <th>Estimasi</th>
+          <th>Per Orang</th>
+          <th>Aktual</th>
+          <th></th>
+        </tr>
+      </thead>
       <tbody>
         @forelse($budgets as $b)
         <tr>
           <td><strong>{{ ucfirst($b->category) }}</strong></td>
           <td>{{ $b->description ?? '—' }}</td>
           <td>Rp {{ number_format($b->estimated) }}</td>
+          <td>Rp {{ number_format($trip->people > 0 ? $b->estimated / $trip->people : 0) }}</td>
           <td>{{ $b->actual ? 'Rp '.number_format($b->actual) : '—' }}</td>
           <td>
             <form action="{{ route('budgets.destroy',$b) }}" method="POST">
@@ -191,12 +215,21 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:24px">Belum ada budget.</td></tr>
+        <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px">Belum ada budget.</td></tr>
         @endforelse
       </tbody>
-      <tfoot><tr><td colspan="2">TOTAL</td><td>Rp {{ number_format($totalEst) }}</td><td>—</td><td></td></tr></tfoot>
+      <tfoot>
+        <tr>
+          <td colspan="2"><strong>TOTAL</strong></td>
+          <td><strong>Rp {{ number_format($totalEst) }}</strong></td>
+          <td><strong>Rp {{ number_format($perOrang) }}</strong></td>
+          <td>—</td>
+          <td></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
+
   <div class="card" style="max-width:540px">
     <div style="font-size:15px;font-weight:500;margin-bottom:16px;color:var(--forest)">Tambah Budget</div>
     <form action="{{ route('budgets.store',$trip) }}" method="POST">
@@ -324,16 +357,17 @@
 
 @push('scripts')
 <script>
-function switchTab(name){
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
-    b.classList.toggle('active',['itinerary','budget','checklist','gallery'][i]===name);
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(c => {
+    c.classList.remove('active');
+    c.style.display = 'none';
   });
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-}
-function toggleForm(day){
-  const f=document.getElementById('form-'+day);
-  f.classList.toggle('open');
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.remove('active');
+  });
+  document.getElementById('tab-' + name).style.display = 'block';
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
 }
 </script>
 @endpush

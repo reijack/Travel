@@ -12,9 +12,10 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public function boot(): void
-    {
-        \View::composer('*', function ($view) {
-            $view->with('sidebarTrips', \App\Models\Trip::latest()->take(5)->get());
-        });
-    }
+ {
+    // ✅ Hanya view yang extend 'layouts.app'
+    \View::composer('layouts.app', function ($view) {
+        $view->with('sidebarTrips', \App\Models\Trip::latest()->take(5)->get());
+    });
+ }
 }
