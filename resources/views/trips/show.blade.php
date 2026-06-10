@@ -4,15 +4,21 @@
 
 @push('styles')
 <style>
+  /* HERO */
   .trip-hero{background:linear-gradient(135deg,var(--forest),var(--sage));border-radius:24px;padding:28px 32px;margin-bottom:24px;color:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
   .trip-hero h2{font-family:var(--ff-display);font-size:24px;font-weight:600;margin-bottom:8px}
   .th-meta{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:rgba(255,255,255,.75)}
   .th-meta span{display:flex;align-items:center;gap:5px}
-  .tabs{display:flex;gap:4px;background:var(--sand);padding:4px;border-radius:10px;margin-bottom:22px}
-  .tab-btn{padding:9px 20px;border-radius:8px;border:none;background:none;font-size:13px;color:var(--text-muted);cursor:pointer;font-family:var(--ff-body);transition:all .18s;display:flex;align-items:center;gap:6px}
+
+  /* TABS */
+  .tabs{display:flex;gap:4px;background:var(--sand);padding:4px;border-radius:10px;margin-bottom:22px;width:100%}
+  .tab-btn{flex:1;padding:10px 16px;border-radius:8px;border:none;background:none;font-size:13px;color:var(--text-muted);cursor:pointer;font-family:var(--ff-body);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:6px}
   .tab-btn:hover{background:#fff}
   .tab-btn.active{background:#fff;color:var(--forest);font-weight:500;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-  .tab-content{display:none}.tab-content.active{display:block}
+  .tab-content{display:none;width:100%}
+  .tab-content.active{display:block}
+
+  /* ITINERARY */
   .day-block{background:#fff;border-radius:16px;border:1px solid var(--gray2);overflow:hidden;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
   .day-header{background:var(--forest);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
   .day-title{color:#fff;font-size:15px;font-weight:500;font-family:var(--ff-display)}
@@ -37,39 +43,62 @@
   .add-form.open{display:block}
   .add-form-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:10px}
   .add-form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-  .bt-box{background:var(--forest);border-radius:16px;padding:22px 26px;color:#fff;margin-bottom:20px}
-  .bt-lbl{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:4px}
-  .bt-val{font-family:var(--ff-display);font-size:30px;font-weight:600}
-  .budget-table-wrap{background:#fff;border-radius:16px;border:1px solid var(--gray2);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:20px}
+
+  /* BUDGET */
+  .budget-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .bs-card{border-radius:16px;padding:22px 26px;color:#fff}
+  .bs-card.total{background:var(--forest)}
+  .bs-card.perorang{background:var(--terra)}
+  .bs-lbl{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:6px}
+  .bs-val{font-family:var(--ff-display);font-size:28px;font-weight:600}
+  .bs-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+  .budget-table-wrap{background:#fff;border-radius:16px;border:1px solid var(--gray2);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:24px}
   .budget-table{width:100%;border-collapse:collapse}
   .budget-table th{background:var(--sand);padding:11px 16px;font-size:12px;font-weight:500;color:var(--text-muted);text-align:left;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--gray2)}
   .budget-table td{padding:13px 16px;font-size:14px;border-bottom:1px solid var(--gray2)}
   .budget-table tbody tr:last-child td{border-bottom:none}
   .budget-table tbody tr:hover{background:var(--gray1)}
   .budget-table tfoot td{background:var(--sand);font-weight:600}
+
+  /* CHECKLIST */
   .cl-progress{background:#fff;border-radius:12px;border:1px solid var(--gray2);padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
   .cl-track{flex:1;height:8px;background:var(--gray2);border-radius:4px}
-  .cl-fill{height:100%;border-radius:4px;background:var(--forest)}
-  .cl-box{background:#fff;border-radius:16px;border:1px solid var(--gray2);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:16px}
-  .cl-item{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--gray2);transition:background .15s}
+  .cl-fill{height:100%;border-radius:4px;background:var(--forest);transition:width .3s}
+  .cl-box{background:#fff;border-radius:16px;border:1px solid var(--gray2);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:24px}
+  .cl-item{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--gray2);transition:background .15s;cursor:pointer}
   .cl-item:last-child{border-bottom:none}
   .cl-item:hover{background:var(--gray1)}
   .cl-name{flex:1;font-size:14px}
   .cl-name.done{text-decoration:line-through;color:var(--gray3)}
-  .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .photo-card{background:#fff;border-radius:12px;border:1px solid var(--gray2);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-  .photo-card img{width:100%;height:160px;object-fit:cover}
+
+  /* GALLERY */
+  .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+  .photo-card{background:#fff;border-radius:12px;border:1px solid var(--gray2);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:all .18s}
+  .photo-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .photo-card img{width:100%;height:180px;object-fit:cover}
   .photo-info{padding:12px}
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  .photo-caption{font-size:13px;font-weight:500;color:var(--text)}
+  .photo-date{font-size:11px;color:var(--text-muted);margin-top:4px;display:flex;align-items:center;gap:4px}
+  .empty-state{text-align:center;padding:48px 20px;color:var(--text-muted)}
+  .empty-state i{font-size:40px;color:var(--gray3);margin-bottom:12px;display:block}
+
+  /* FORM SECTION */
+  .form-section{background:#fff;border-radius:16px;border:1px solid var(--gray2);padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .form-section-title{font-size:15px;font-weight:500;color:var(--forest);margin-bottom:18px;display:flex;align-items:center;gap:8px}
 </style>
 @endpush
 
 @section('content')
 @php $days=\Carbon\Carbon::parse($trip->start_date)->diffInDays($trip->end_date)+1; @endphp
 
-<a href="{{ route('trips.index') }}" class="btn-outline sm" style="margin-bottom:16px;display:inline-flex"><i class="ti ti-arrow-left"></i> Semua Trip</a>
+{{-- BACK BUTTON --}}
+<div style="margin-bottom:16px">
+  <a href="{{ route('trips.index') }}" class="btn-outline sm">
+    <i class="ti ti-arrow-left"></i> Semua Trip
+  </a>
+</div>
 
+{{-- HERO --}}
 <div class="trip-hero">
   <div>
     <h2>{{ $trip->trip_name }} 🌴</h2>
@@ -81,27 +110,43 @@
       <span><i class="ti ti-wallet"></i> Rp {{ number_format($trip->budget) }}</span>
     </div>
   </div>
-  <a href="{{ route('trips.edit',$trip) }}" class="btn-outline sm" style="color:#fff;border-color:rgba(255,255,255,.4)"><i class="ti ti-edit"></i> Edit</a>
+  <a href="{{ route('trips.edit',$trip) }}" class="btn-outline sm" style="color:#fff;border-color:rgba(255,255,255,.4)">
+    <i class="ti ti-edit"></i> Edit
+  </a>
 </div>
 
+{{-- TABS --}}
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('itinerary')"><i class="ti ti-calendar-event"></i> Itinerary</button>
-  <button class="tab-btn" onclick="switchTab('budget')"><i class="ti ti-wallet"></i> Budget</button>
-  <button class="tab-btn" onclick="switchTab('checklist')"><i class="ti ti-checklist"></i> Checklist</button>
-  <button class="tab-btn" onclick="switchTab('gallery')"><i class="ti ti-photo"></i> Galeri</button>
+  <button class="tab-btn active" onclick="switchTab('itinerary',this)">
+    <i class="ti ti-calendar-event"></i> Itinerary
+  </button>
+  <button class="tab-btn" onclick="switchTab('budget',this)">
+    <i class="ti ti-wallet"></i> Budget
+  </button>
+  <button class="tab-btn" onclick="switchTab('checklist',this)">
+    <i class="ti ti-checklist"></i> Checklist
+  </button>
+  <button class="tab-btn" onclick="switchTab('gallery',this)">
+    <i class="ti ti-photo"></i> Galeri
+  </button>
 </div>
 
-{{-- ITINERARY --}}
+{{-- ═══════════ TAB ITINERARY ═══════════ --}}
 <div class="tab-content active" id="tab-itinerary">
   @for($d=1;$d<=$days;$d++)
   @php $dayActs=$itineraries->get($d,collect()); @endphp
   <div class="day-block">
     <div class="day-header">
-      <div class="day-title">Hari {{ $d }} — {{ \Carbon\Carbon::parse($trip->start_date)->addDays($d-1)->isoFormat('dddd, D MMMM Y') }}</div>
-      <button class="btn-outline sm" style="color:#fff;border-color:rgba(255,255,255,.4);background:transparent" onclick="toggleForm({{ $d }})">
+      <div class="day-title">
+        Hari {{ $d }} — {{ \Carbon\Carbon::parse($trip->start_date)->addDays($d-1)->isoFormat('dddd, D MMMM Y') }}
+      </div>
+      <button class="btn-outline sm"
+        style="color:#fff;border-color:rgba(255,255,255,.4);background:transparent"
+        onclick="toggleForm({{ $d }})">
         <i class="ti ti-plus"></i> Tambah
       </button>
     </div>
+
     <div class="act-list">
       @forelse($dayActs as $act)
       <div class="act-item">
@@ -109,27 +154,38 @@
         <div class="act-dot" style="background:{{ ['pantai'=>'#185FA5','budaya'=>'#534AB7','alam'=>'#3B6D11','wisata'=>'#52796F','kuliner'=>'#854F0B','belanja'=>'#E09F3E','transport'=>'#9A9890'][$act->category] ?? '#ccc' }}"></div>
         <div class="act-info">
           <div class="act-name">{{ $act->activity }}</div>
-          @if($act->location)<div class="act-loc"><i class="ti ti-map-pin"></i> {{ $act->location }}</div>@endif
-          @if($act->notes)<div class="act-note">{{ $act->notes }}</div>@endif
+          @if($act->location)
+            <div class="act-loc"><i class="ti ti-map-pin"></i> {{ $act->location }}</div>
+          @endif
+          @if($act->notes)
+            <div class="act-note">{{ $act->notes }}</div>
+          @endif
         </div>
         <span class="act-tag tag-{{ $act->category }}">{{ ucfirst($act->category) }}</span>
         <form action="{{ route('itineraries.destroy',$act) }}" method="POST" style="margin-left:8px">
           @csrf @method('DELETE')
-          <button type="submit" class="btn-danger" style="padding:5px 8px"><i class="ti ti-trash"></i></button>
+          <button type="submit" class="btn-danger" style="padding:5px 8px" title="Hapus">
+            <i class="ti ti-trash"></i>
+          </button>
         </form>
       </div>
       @empty
-      <div style="padding:16px 0;text-align:center;color:var(--text-muted);font-size:13px">Belum ada aktivitas.</div>
+      <div class="empty-state">
+        <i class="ti ti-calendar-off"></i>
+        Belum ada aktivitas di hari ini. Klik <strong>Tambah</strong> untuk menambahkan.
+      </div>
       @endforelse
     </div>
+
+    {{-- Form tambah aktivitas per hari --}}
     <div class="add-form" id="form-{{ $d }}">
       <form action="{{ route('itineraries.store',$trip) }}" method="POST">
         @csrf
         <input type="hidden" name="day" value="{{ $d }}">
         <div class="add-form-grid">
           <div class="form-group" style="margin:0">
-            <label>Aktivitas *</label>
-            <input type="text" name="activity" class="form-input" placeholder="Nama tempat" required/>
+            <label>Nama Aktivitas *</label>
+            <input type="text" name="activity" class="form-input" placeholder="Cth: Pantai Kuta" required/>
           </div>
           <div class="form-group" style="margin:0">
             <label>Waktu</label>
@@ -155,10 +211,10 @@
           </div>
           <div class="form-group" style="margin:0">
             <label>Catatan</label>
-            <input type="text" name="notes" class="form-input" placeholder="Tips..."/>
+            <input type="text" name="notes" class="form-input" placeholder="Tips atau info..."/>
           </div>
         </div>
-        <div style="display:flex;gap:8px">
+        <div style="display:flex;gap:8px;margin-top:4px">
           <button type="submit" class="btn-primary sm"><i class="ti ti-check"></i> Simpan</button>
           <button type="button" class="btn-outline sm" onclick="toggleForm({{ $d }})">Batal</button>
         </div>
@@ -168,26 +224,32 @@
   @endfor
 </div>
 
-
-</div>{{-- BUDGET --}}
+{{-- ═══════════ TAB BUDGET ═══════════ --}}
 <div class="tab-content" id="tab-budget">
   @php
-    $totalEst = $budgets->sum('estimated');
-    $perOrang = $trip->people > 0 ? $totalEst / $trip->people : 0;
+    $totalEst  = $budgets->sum('estimated');
+    $totalAct  = $budgets->sum('actual');
+    $perOrang  = $trip->people > 0 ? $totalEst / $trip->people : 0;
   @endphp
 
-  <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;width:100%">
-    <div style="flex:1;background:var(--forest);border-radius:12px;padding:22px 26px;color:#fff">
-      <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:4px">Total Estimasi Budget</div>
-      <div style="font-family:var(--ff-display);font-size:30px;font-weight:600">Rp {{ number_format($totalEst) }}</div>
+  {{-- Summary Cards --}}
+  <div class="budget-stats">
+    <div class="bs-card total">
+      <div class="bs-lbl">Total Estimasi Budget</div>
+      <div class="bs-val">Rp {{ number_format($totalEst) }}</div>
+      @if($totalAct > 0)
+        <div class="bs-sub">Aktual: Rp {{ number_format($totalAct) }}</div>
+      @endif
     </div>
-    <div style="flex:1;background:#C1440E;border-radius:12px;padding:22px 26px;color:#fff">
-      <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:4px">Per Orang ({{ $trip->people }} orang)</div>
-      <div style="font-family:var(--ff-display);font-size:30px;font-weight:600">Rp {{ number_format($perOrang) }}</div>
+    <div class="bs-card perorang">
+      <div class="bs-lbl">Per Orang ({{ $trip->people }} orang)</div>
+      <div class="bs-val">Rp {{ number_format($perOrang) }}</div>
+      <div class="bs-sub">Estimasi per orang</div>
     </div>
   </div>
 
-  <div class="budget-table-wrap" style="margin-bottom:20px">
+  {{-- Tabel Budget --}}
+  <div class="budget-table-wrap">
     <table class="budget-table">
       <thead>
         <tr>
@@ -210,12 +272,19 @@
           <td>
             <form action="{{ route('budgets.destroy',$b) }}" method="POST">
               @csrf @method('DELETE')
-              <button type="submit" class="btn-danger" style="padding:5px 8px"><i class="ti ti-trash"></i></button>
+              <button type="submit" class="btn-danger" style="padding:5px 8px">
+                <i class="ti ti-trash"></i>
+              </button>
             </form>
           </td>
         </tr>
         @empty
-        <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px">Belum ada budget.</td></tr>
+        <tr>
+          <td colspan="6" style="text-align:center;color:var(--text-muted);padding:28px">
+            <i class="ti ti-wallet-off" style="font-size:24px;display:block;margin-bottom:8px"></i>
+            Belum ada catatan budget.
+          </td>
+        </tr>
         @endforelse
       </tbody>
       <tfoot>
@@ -223,15 +292,16 @@
           <td colspan="2"><strong>TOTAL</strong></td>
           <td><strong>Rp {{ number_format($totalEst) }}</strong></td>
           <td><strong>Rp {{ number_format($perOrang) }}</strong></td>
-          <td>—</td>
+          <td><strong>{{ $totalAct > 0 ? 'Rp '.number_format($totalAct) : '—' }}</strong></td>
           <td></td>
         </tr>
       </tfoot>
     </table>
   </div>
 
-  <div class="card" style="max-width:540px">
-    <div style="font-size:15px;font-weight:500;margin-bottom:16px;color:var(--forest)">Tambah Budget</div>
+  {{-- Form Tambah Budget --}}
+  <div class="form-section">
+    <div class="form-section-title"><i class="ti ti-plus"></i> Tambah Item Budget</div>
     <form action="{{ route('budgets.store',$trip) }}" method="POST">
       @csrf
       <div class="form-row">
@@ -239,10 +309,10 @@
           <label>Kategori</label>
           <select name="category" class="form-input">
             <option value="transportasi">Transportasi</option>
-            <option value="hotel">Hotel</option>
-            <option value="makan">Makan</option>
+            <option value="hotel">Hotel / Penginapan</option>
+            <option value="makan">Makan & Minum</option>
             <option value="tiket">Tiket Wisata</option>
-            <option value="belanja">Belanja</option>
+            <option value="belanja">Belanja / Oleh-oleh</option>
             <option value="lainnya">Lainnya</option>
           </select>
         </div>
@@ -257,49 +327,74 @@
           <input type="number" name="estimated" class="form-input" placeholder="500000" required/>
         </div>
         <div class="form-group">
-          <label>Aktual (Rp)</label>
-          <input type="number" name="actual" class="form-input" placeholder="Opsional"/>
+          <label>Aktual (Rp) <span style="color:var(--text-muted);font-weight:400">(opsional)</span></label>
+          <input type="number" name="actual" class="form-input" placeholder="Isi setelah perjalanan"/>
         </div>
       </div>
-      <button type="submit" class="btn-primary"><i class="ti ti-check"></i> Simpan</button>
+      <button type="submit" class="btn-primary"><i class="ti ti-check"></i> Simpan Budget</button>
     </form>
   </div>
 </div>
 
-{{-- CHECKLIST --}}
+{{-- ═══════════ TAB CHECKLIST ═══════════ --}}
 <div class="tab-content" id="tab-checklist">
-  @php $done=$checklists->where('status',true)->count(); $total=$checklists->count(); $pct=$total>0?round($done/$total*100):0; @endphp
+  @php
+    $done  = $checklists->where('status',true)->count();
+    $total = $checklists->count();
+    $pct   = $total > 0 ? round($done / $total * 100) : 0;
+  @endphp
+
+  {{-- Progress --}}
   <div class="cl-progress">
-    <span style="font-size:13px;color:var(--text-muted);min-width:140px">{{ $done }} dari {{ $total }} selesai</span>
-    <div class="cl-track"><div class="cl-fill" style="width:{{ $pct }}%"></div></div>
-    <span style="font-size:13px;font-weight:500;color:var(--forest)">{{ $pct }}%</span>
+    <span style="font-size:13px;color:var(--text-muted);min-width:150px">
+      {{ $done }} dari {{ $total }} item selesai
+    </span>
+    <div class="cl-track">
+      <div class="cl-fill" style="width:{{ $pct }}%"></div>
+    </div>
+    <span style="font-size:14px;font-weight:500;color:var(--forest);min-width:40px;text-align:right">
+      {{ $pct }}%
+    </span>
   </div>
+
+  {{-- List --}}
   <div class="cl-box">
     @forelse($checklists as $cl)
     <div class="cl-item">
       <form action="{{ route('checklists.toggle',$cl) }}" method="POST">
         @csrf @method('PATCH')
-        <button type="submit" style="background:none;border:none;cursor:pointer;display:flex;align-items:center">
-          <div style="width:22px;height:22px;border-radius:7px;border:1.5px solid {{ $cl->status?'var(--forest)':'var(--gray3)' }};background:{{ $cl->status?'var(--forest)':'transparent' }};display:flex;align-items:center;justify-content:center">
-            @if($cl->status)<i class="ti ti-check" style="color:#fff;font-size:13px"></i>@endif
+        <button type="submit" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;padding:0">
+          <div style="width:22px;height:22px;border-radius:7px;border:1.5px solid {{ $cl->status ? 'var(--forest)' : 'var(--gray3)' }};background:{{ $cl->status ? 'var(--forest)' : 'transparent' }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            @if($cl->status)
+              <i class="ti ti-check" style="color:#fff;font-size:13px"></i>
+            @endif
           </div>
         </button>
       </form>
-      <div style="flex:1;margin-left:10px">
-        <div class="cl-name {{ $cl->status?'done':'' }}">{{ $cl->item_name }}</div>
-        @if($cl->note)<div style="font-size:11px;color:var(--text-muted)">{{ $cl->note }}</div>@endif
+      <div style="flex:1;margin-left:12px">
+        <div class="cl-name {{ $cl->status ? 'done' : '' }}">{{ $cl->item_name }}</div>
+        @if($cl->note)
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">{{ $cl->note }}</div>
+        @endif
       </div>
       <form action="{{ route('checklists.destroy',$cl) }}" method="POST">
         @csrf @method('DELETE')
-        <button type="submit" style="background:none;border:none;cursor:pointer;color:var(--gray3);font-size:16px"><i class="ti ti-x"></i></button>
+        <button type="submit" style="background:none;border:none;cursor:pointer;color:var(--gray3);font-size:16px;padding:4px;transition:color .18s" onmouseover="this.style.color='#B91C1C'" onmouseout="this.style.color='var(--gray3)'">
+          <i class="ti ti-x"></i>
+        </button>
       </form>
     </div>
     @empty
-    <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:13px">Belum ada checklist.</div>
+    <div class="empty-state">
+      <i class="ti ti-checklist"></i>
+      Belum ada item checklist. Tambahkan di bawah!
+    </div>
     @endforelse
   </div>
-  <div class="card" style="max-width:480px">
-    <div style="font-size:15px;font-weight:500;margin-bottom:14px;color:var(--forest)">Tambah Item</div>
+
+  {{-- Form Tambah --}}
+  <div class="form-section" style="max-width:500px">
+    <div class="form-section-title"><i class="ti ti-plus"></i> Tambah Item Checklist</div>
     <form action="{{ route('checklists.store',$trip) }}" method="POST">
       @csrf
       <div class="form-group">
@@ -307,37 +402,50 @@
         <input type="text" name="item_name" class="form-input" placeholder="Cth: Bawa sunscreen" required/>
       </div>
       <div class="form-group">
-        <label>Keterangan</label>
-        <input type="text" name="note" class="form-input" placeholder="Opsional"/>
+        <label>Keterangan <span style="color:var(--text-muted);font-weight:400">(opsional)</span></label>
+        <input type="text" name="note" class="form-input" placeholder="Cth: SPF 50+"/>
       </div>
-      <button type="submit" class="btn-primary"><i class="ti ti-check"></i> Tambah</button>
+      <button type="submit" class="btn-primary"><i class="ti ti-check"></i> Tambah Item</button>
     </form>
   </div>
 </div>
 
-{{-- GALLERY --}}
+{{-- ═══════════ TAB GALERI ═══════════ --}}
 <div class="tab-content" id="tab-gallery">
+
+  @if($photos->isEmpty())
+  <div class="empty-state" style="background:#fff;border-radius:16px;border:1px solid var(--gray2);margin-bottom:24px">
+    <i class="ti ti-photo-off"></i>
+    Belum ada foto. Upload foto pertamamu!
+  </div>
+  @else
   <div class="photo-grid">
-    @forelse($photos as $photo)
+    @foreach($photos as $photo)
     <div class="photo-card">
       <img src="{{ asset('storage/'.$photo->image_path) }}" alt="{{ $photo->caption }}"/>
       <div class="photo-info">
-        <div style="font-size:13px;font-weight:500">{{ $photo->caption ?? 'Foto perjalanan' }}</div>
+        <div class="photo-caption">{{ $photo->caption ?? 'Foto perjalanan' }}</div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
-          <div style="font-size:11px;color:var(--text-muted)">{{ $photo->created_at->format('d M Y') }}</div>
-          <form action="{{ route('photos.destroy',$photo) }}" method="POST">
+          <div class="photo-date">
+            <i class="ti ti-calendar"></i>
+            {{ $photo->created_at->format('d M Y') }}
+          </div>
+          <form action="{{ route('photos.destroy',$photo) }}" method="POST" onsubmit="return confirm('Hapus foto ini?')">
             @csrf @method('DELETE')
-            <button type="submit" class="btn-danger" style="padding:4px 8px"><i class="ti ti-trash"></i></button>
+            <button type="submit" class="btn-danger" style="padding:4px 8px">
+              <i class="ti ti-trash"></i>
+            </button>
           </form>
         </div>
       </div>
     </div>
-    @empty
-    <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">Belum ada foto.</div>
-    @endforelse
+    @endforeach
   </div>
-  <div class="card" style="margin-top:20px;max-width:480px">
-    <div style="font-size:15px;font-weight:500;margin-bottom:14px;color:var(--forest)">Upload Foto</div>
+  @endif
+
+  {{-- Form Upload --}}
+  <div class="form-section" style="max-width:500px">
+    <div class="form-section-title"><i class="ti ti-upload"></i> Upload Foto</div>
     <form action="{{ route('photos.store',$trip) }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="form-group">
@@ -345,10 +453,10 @@
         <input type="file" name="image" class="form-input" accept="image/*" required/>
       </div>
       <div class="form-group">
-        <label>Caption</label>
-        <input type="text" name="caption" class="form-input" placeholder="Cth: Sunset di Kuta"/>
+        <label>Caption <span style="color:var(--text-muted);font-weight:400">(opsional)</span></label>
+        <input type="text" name="caption" class="form-input" placeholder="Cth: Sunset di Kuta 🌅"/>
       </div>
-      <button type="submit" class="btn-primary"><i class="ti ti-upload"></i> Upload</button>
+      <button type="submit" class="btn-primary"><i class="ti ti-upload"></i> Upload Foto</button>
     </form>
   </div>
 </div>
@@ -357,17 +465,19 @@
 
 @push('scripts')
 <script>
-function switchTab(name) {
-  document.querySelectorAll('.tab-content').forEach(c => {
-    c.classList.remove('active');
-    c.style.display = 'none';
-  });
-  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-    btn.classList.remove('active');
-  });
-  document.getElementById('tab-' + name).style.display = 'block';
+function switchTab(name, btn) {
+  // Update tab buttons
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Update tab content
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
+}
+
+function toggleForm(day) {
+  const f = document.getElementById('form-' + day);
+  f.classList.toggle('open');
 }
 </script>
 @endpush

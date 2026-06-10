@@ -6,6 +6,7 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\AuthController; // ← baru
+use App\Http\Controllers\AdminController;
 
 // Auth (publik)
 Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
@@ -31,4 +32,10 @@ Route::middleware('auth')->group(function() {
 
     Route::post('trips/{trip}/photos', [PhotoController::class, 'store'])->name('photos.store');
     Route::delete('photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+
+    // Admin routes
+Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::delete('users/{user}', [AdminController::class, 'destroy'])->name('users.destroy');
+});
 });

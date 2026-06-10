@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Trip extends Model
 {
     protected $fillable = [
+        'user_id',
         'trip_name',
         'destination',
         'start_date',
@@ -15,6 +16,11 @@ class Trip extends Model
         'budget',
         'status',
     ];
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 
     public function itineraries()
     {

@@ -105,15 +105,20 @@
   <header class="topbar">
     <div class="topbar-title">@yield('page-title', 'Travel Planner')</div>
     <div class="topbar-actions">
-      <a href="{{ route('trips.create') }}" class="btn-primary sm"><i class="ti ti-plus"></i> Trip Baru</a>
-      <div class="user-menu">
-        <span class="user-name">{{ Auth::user()->name }}</span>
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-          <button type="submit" class="logout-btn">Keluar</button>
-        </form>
-      </div>
-    </div>
+  @if(Auth::check() && Auth::user()->is_admin)
+  <a href="{{ route('admin.index') }}" class="btn-outline sm" style="border-color:#6D28D9;color:#6D28D9">
+    <i class="ti ti-shield-check"></i> Admin
+  </a>
+  @endif
+  <a href="{{ route('trips.create') }}" class="btn-primary sm"><i class="ti ti-plus"></i> Trip Baru</a>
+  <div class="user-menu">
+    <span class="user-name">{{ Auth::user()->name }}</span>
+    <form method="POST" action="{{ route('logout') }}">
+      @csrf
+      <button type="submit" class="logout-btn">Keluar</button>
+    </form>
+  </div>
+</div>
   </header>
   <main class="content">
     @if(session('success'))
