@@ -47,7 +47,7 @@
   <div>
     <div class="admin-badge"><i class="ti ti-shield-check"></i> Admin Panel</div>
     <h2>Manajemen Pengguna 👥</h2>
-    <p>Kelola semua akun pengguna WanderPlan</p>
+    <p>Kelola semua akun pengguna Travel Planner</p>
   </div>
   <a href="{{ route('trips.index') }}" class="btn-outline sm" style="color:#fff;border-color:rgba(255,255,255,.3)">
     <i class="ti ti-arrow-left"></i> Kembali ke Dashboard

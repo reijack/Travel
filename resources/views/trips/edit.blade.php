@@ -11,17 +11,25 @@
   <a href="{{ route('trips.show',$trip) }}" class="btn-outline"><i class="ti ti-arrow-left"></i> Kembali</a>
 </div>
 
-<div class="card" style="max-width:640px">
-  <form action="{{ route('trips.update',$trip) }}" method="POST">
-    @csrf @method('PUT')
-    <div class="form-group">
-      <label>Nama Trip *</label>
-      <input type="text" name="trip_name" class="form-input" value="{{ old('trip_name',$trip->trip_name) }}" required/>
-    </div>
-    <div class="form-group">
-      <label>Destinasi *</label>
-      <input type="text" name="destination" class="form-input" value="{{ old('destination',$trip->destination) }}" required/>
-    </div>
+<div class="form-group">
+  <label>Nama Trip *</label>
+  <input type="text" name="trip_name" class="form-input"
+    value="{{ old('trip_name',$trip->trip_name) }}"
+    pattern="[A-Za-z\s]+"
+    oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')"
+    maxlength="20"
+    required/>
+</div>
+
+<div class="form-group">
+  <label>Destinasi *</label>
+  <input type="text" name="destination" class="form-input"
+    value="{{ old('destination',$trip->destination) }}"
+    pattern="[A-Za-z\s,]+"
+    oninput="this.value=this.value.replace(/[^A-Za-z\s,]/g,'')"
+    maxlength="20"
+    required/>
+</div>
     <div class="form-row">
       <div class="form-group">
         <label>Tanggal Berangkat *</label>

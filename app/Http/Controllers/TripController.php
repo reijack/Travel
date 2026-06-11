@@ -54,12 +54,17 @@ class TripController extends Controller
 
     public function update(Request $request, Trip $trip)
     {
-        $request->validate([
-            'trip_name'   => 'required|string|max:255',
-            'destination' => 'required|string|max:255',
-            'start_date'  => 'required|date',
-            'end_date'    => 'required|date',
-        ]);
+       $request->validate([
+    'trip_name'   => ['required','string','max:255','regex:/^[A-Za-z\s]+$/'],
+    'destination' => ['required','string','max:255','regex:/^[A-Za-z\s,]+$/'],
+    'start_date'  => 'required|date',
+    'end_date'    => 'required|date',
+    'people'      => 'required|integer|min:1',
+    'budget'      => 'nullable|integer',
+], [
+    'trip_name.regex'   => 'Nama trip hanya boleh huruf, tidak boleh angka!',
+    'destination.regex' => 'Destinasi hanya boleh huruf, tidak boleh angka!',
+]);
 
         $trip->update($request->all());
 

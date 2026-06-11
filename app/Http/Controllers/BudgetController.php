@@ -24,6 +24,22 @@ class BudgetController extends Controller
         return back()->with('success', 'Budget berhasil ditambahkan!');
     }
 
+    public function update(Request $request, Budget $budget)
+    {
+        $request->validate([
+            'estimated' => 'required|integer|min:0',
+        ]);
+
+        $budget->update([
+            'category'    => $request->category,
+            'description' => $request->description,
+            'estimated'   => $request->estimated,
+            'actual'      => $request->actual,
+        ]);
+
+        return back()->with('success', 'Budget berhasil diupdate!');
+    }
+
     public function destroy(Budget $budget)
     {
         $budget->delete();

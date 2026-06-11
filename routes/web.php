@@ -20,18 +20,26 @@ Route::middleware('auth')->group(function() {
     Route::get('/', fn() => redirect()->route('trips.index'));
     Route::resource('trips', TripController::class);
 
-    Route::post('trips/{trip}/itineraries', [ItineraryController::class, 'store'])->name('itineraries.store');
-    Route::delete('itineraries/{itinerary}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
+    // Itinerary
+Route::post('trips/{trip}/itineraries', [ItineraryController::class, 'store'])->name('itineraries.store');
+Route::put('itineraries/{itinerary}', [ItineraryController::class, 'update'])->name('itineraries.update');
+Route::delete('itineraries/{itinerary}', [ItineraryController::class, 'destroy'])->name('itineraries.destroy');
 
-    Route::post('trips/{trip}/budgets', [BudgetController::class, 'store'])->name('budgets.store');
-    Route::delete('budgets/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
+// Budget
+Route::post('trips/{trip}/budgets', [BudgetController::class, 'store'])->name('budgets.store');
+Route::put('budgets/{budget}', [BudgetController::class, 'update'])->name('budgets.update');
+Route::delete('budgets/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
 
-    Route::post('trips/{trip}/checklists', [ChecklistController::class, 'store'])->name('checklists.store');
-    Route::patch('checklists/{checklist}/toggle', [ChecklistController::class, 'toggle'])->name('checklists.toggle');
-    Route::delete('checklists/{checklist}', [ChecklistController::class, 'destroy'])->name('checklists.destroy');
+// Checklist
+Route::post('trips/{trip}/checklists', [ChecklistController::class, 'store'])->name('checklists.store');
+Route::patch('checklists/{checklist}/toggle', [ChecklistController::class, 'toggle'])->name('checklists.toggle');
+Route::put('checklists/{checklist}', [ChecklistController::class, 'update'])->name('checklists.update');
+Route::delete('checklists/{checklist}', [ChecklistController::class, 'destroy'])->name('checklists.destroy');
 
-    Route::post('trips/{trip}/photos', [PhotoController::class, 'store'])->name('photos.store');
-    Route::delete('photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+// Photos
+Route::post('trips/{trip}/photos', [PhotoController::class, 'store'])->name('photos.store');
+Route::put('photos/{photo}', [PhotoController::class, 'update'])->name('photos.update');
+Route::delete('photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
 
     // Admin routes
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {

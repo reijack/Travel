@@ -11,19 +11,30 @@
   <a href="{{ route('trips.index') }}" class="btn-outline"><i class="ti ti-arrow-left"></i> Kembali</a>
 </div>
 
-<div class="card" style="max-width:640px">
-  <form action="{{ route('trips.store') }}" method="POST">
-    @csrf
-    <div class="form-group">
-      <label>Nama Trip *</label>
-      <input type="text" name="trip_name" class="form-input" placeholder="Cth: Liburan ke Bali" value="{{ old('trip_name') }}" required/>
-      @error('trip_name')<div class="form-error">{{ $message }}</div>@enderror
-    </div>
-    <div class="form-group">
-      <label>Destinasi *</label>
-      <input type="text" name="destination" class="form-input" placeholder="Cth: Bali, Indonesia" value="{{ old('destination') }}" required/>
-      @error('destination')<div class="form-error">{{ $message }}</div>@enderror
-    </div>
+<div class="form-group">
+  <label>Nama Trip *</label>
+  <input type="text" name="trip_name" class="form-input"
+    placeholder="Cth: Liburan ke Bali"
+    value="{{ old('trip_name') }}"
+    pattern="[A-Za-z\s]+"
+    oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')"
+    maxlength="20"
+    required/>
+  @error('trip_name')<div class="form-error">{{ $message }}</div>@enderror
+</div>
+
+<div class="form-group">
+  <label>Destinasi *</label>
+  <input type="text" name="destination" class="form-input"
+    placeholder="Cth: Bali, Indonesia"
+    value="{{ old('destination') }}"
+    pattern="[A-Za-z\s,]+"
+    oninput="this.value=this.value.replace(/[^A-Za-z\s,]/g,'')"
+    maxlength="20"
+    required/>
+  @error('destination')<div class="form-error">{{ $message }}</div>@enderror
+</div>
+
     <div class="form-row">
       <div class="form-group">
         <label>Tanggal Berangkat *</label>

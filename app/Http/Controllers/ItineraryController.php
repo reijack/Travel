@@ -27,6 +27,23 @@ class ItineraryController extends Controller
         return back()->with('success', 'Aktivitas berhasil ditambahkan!');
     }
 
+    public function update(Request $request, Itinerary $itinerary)
+    {
+        $request->validate([
+            'activity' => 'required|string|max:255',
+        ]);
+
+        $itinerary->update([
+            'activity' => $request->activity,
+            'time'     => $request->time,
+            'location' => $request->location,
+            'category' => $request->category,
+            'notes'    => $request->notes,
+        ]);
+
+        return back()->with('success', 'Aktivitas berhasil diupdate!');
+    }
+
     public function destroy(Itinerary $itinerary)
     {
         $itinerary->delete();

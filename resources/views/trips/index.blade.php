@@ -46,7 +46,7 @@
 <div class="hero">
   <div class="hero-tag"><i class="ti ti-sun"></i> Selamat datang!</div>
   <h1>Rencanakan Petualanganmu 🌍</h1>
-  <p>Kelola semua trip, itinerary, dan budget perjalananmu di satu tempat.</p>
+  <p>kelola semua trip, itinerary, dan budget perjalananmu di satu tempat.</p>
   <a href="{{ route('trips.create') }}" class="btn-primary"><i class="ti ti-plus"></i> Buat Trip Baru</a>
 </div>
 
