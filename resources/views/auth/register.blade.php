@@ -46,7 +46,7 @@
   </div>
   <div class="card">
     <h1>Buat akun baru</h1>
-    <p class="sub">Mulai rencanakan perjalananmu 🌍</p>
+    <p class="sub">Mulai rencanakan perjalananmu </p>
     <form method="POST" action="{{ route('register') }}">
       @csrf
       <label>Nama</label>

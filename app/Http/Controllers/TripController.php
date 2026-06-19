@@ -20,14 +20,19 @@ class TripController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'trip_name'   => 'required|string|max:255',
-            'destination' => 'required|string|max:255',
-            'start_date'  => 'required|date',
-            'end_date'    => 'required|date',
-            'people'      => 'required|integer|min:1',
-            'budget'      => 'nullable|integer',
-        ]);
+       $request->validate([
+    'trip_name'   => ['required','string','max:30','regex:/^[A-Za-z\s]+$/'],
+    'destination' => ['required','string','max:30','regex:/^[A-Za-z\s,]+$/'],
+    'start_date'  => ['required','date','after_or_equal:today'],
+    'end_date'    => ['required','date','after_or_equal:start_date'],
+    'people'      => 'required|integer|min:1',
+    'budget'      => 'nullable|integer',
+],[
+    'trip_name.regex'   => 'Nama trip hanya boleh huruf!',
+    'destination.regex' => 'Destinasi hanya boleh huruf!',
+    'start_date.after_or_equal' => 'Tanggal berangkat tidak boleh hari sebelumnya.',
+    'end_date.after_or_equal' => 'Tanggal pulang tidak boleh lebih awal dari tanggal berangkat.',
+]);
 
         Trip::create($request->all());
 
@@ -57,13 +62,15 @@ class TripController extends Controller
        $request->validate([
     'trip_name'   => ['required','string','max:255','regex:/^[A-Za-z\s]+$/'],
     'destination' => ['required','string','max:255','regex:/^[A-Za-z\s,]+$/'],
-    'start_date'  => 'required|date',
-    'end_date'    => 'required|date',
+    'start_date'  => ['required','date','after_or_equal:today'],
+    'end_date'    => ['required','date','after_or_equal:start_date'],
     'people'      => 'required|integer|min:1',
     'budget'      => 'nullable|integer',
 ], [
     'trip_name.regex'   => 'Nama trip hanya boleh huruf, tidak boleh angka!',
     'destination.regex' => 'Destinasi hanya boleh huruf, tidak boleh angka!',
+    'start_date.after_or_equal' => 'Tanggal berangkat tidak boleh hari sebelumnya.',
+    'end_date.after_or_equal' => 'Tanggal pulang tidak boleh lebih awal dari tanggal berangkat.',
 ]);
 
         $trip->update($request->all());

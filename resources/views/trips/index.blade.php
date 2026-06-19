@@ -4,7 +4,7 @@
 
 @push('styles')
 <style>
-  .hero{background:linear-gradient(135deg,var(--forest),var(--sage));border-radius:24px;padding:36px 40px;margin-bottom:28px;color:#fff}
+  .hero{background:linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('https://i2.wp.com/blog.tripcetera.com/id/wp-content/uploads/2020/10/Danau-Toba-edited.jpg') center/cover no-repeat;border-radius:24px;padding:36px 40px;margin-bottom:28px;color:#fff}
   .hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);font-size:12px;padding:5px 14px;border-radius:20px;margin-bottom:14px}
   .hero h1{font-family:var(--ff-display);font-size:28px;font-weight:700;margin-bottom:8px}
   .hero p{color:rgba(255,255,255,.75);margin-bottom:22px;font-size:15px}
@@ -22,7 +22,6 @@
   .trip-card{background:#fff;border-radius:16px;border:1px solid var(--gray2);padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:all .18s}
   .trip-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
   .tc-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
-  .tc-emoji{font-size:36px;line-height:1}
   .tc-head h3{font-size:17px;font-weight:500;margin-bottom:6px}
   .tc-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--text-muted)}
   .tc-meta span{display:flex;align-items:center;gap:4px}
@@ -45,7 +44,7 @@
 @section('content')
 <div class="hero">
   <div class="hero-tag"><i class="ti ti-sun"></i> Selamat datang!</div>
-  <h1>Rencanakan Petualanganmu 🌍</h1>
+  <h1>Rencanakan Petualanganmu </h1>
   <p>kelola semua trip, itinerary, dan budget perjalananmu di satu tempat.</p>
   <a href="{{ route('trips.create') }}" class="btn-primary"><i class="ti ti-plus"></i> Buat Trip Baru</a>
 </div>
@@ -82,13 +81,10 @@
 <div class="trips-grid">
   @foreach($trips as $trip)
   @php
-    $emojis=['🌴','🏝️','🌋','🏔️','🗺️','✈️','🌊','🏖️'];
-    $emoji=$emojis[$trip->id % count($emojis)];
     $days=\Carbon\Carbon::parse($trip->start_date)->diffInDays($trip->end_date)+1;
   @endphp
   <div class="trip-card">
     <div class="tc-head">
-      <div class="tc-emoji">{{ $emoji }}</div>
       <div style="flex:1">
         <h3>{{ $trip->trip_name }}</h3>
         <div class="tc-meta">

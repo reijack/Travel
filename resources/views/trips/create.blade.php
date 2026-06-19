@@ -3,15 +3,17 @@
 @section('page-title','Buat Trip Baru')
 
 @section('content')
-<div class="page-header">
-  <div>
-    <h1 class="page-h1">Buat Trip Baru ✈️</h1>
-    <p class="page-sub">Isi detail rencana perjalananmu</p>
+<form action="{{ route('trips.store') }}" method="POST">
+  @csrf
+  <div class="page-header">
+    <div>
+      <h1 class="page-h1">Buat Trip Baru </h1>
+      <p class="page-sub">Isi detail rencana perjalananmu</p>
+    </div>
+    <a href="{{ route('trips.index') }}" class="btn-outline"><i class="ti ti-arrow-left"></i> Kembali</a>
   </div>
-  <a href="{{ route('trips.index') }}" class="btn-outline"><i class="ti ti-arrow-left"></i> Kembali</a>
-</div>
 
-<div class="form-group">
+  <div class="form-group">
   <label>Nama Trip *</label>
   <input type="text" name="trip_name" class="form-input"
     placeholder="Cth: Liburan ke Bali"
@@ -38,11 +40,11 @@
     <div class="form-row">
       <div class="form-group">
         <label>Tanggal Berangkat *</label>
-        <input type="date" name="start_date" class="form-input" value="{{ old('start_date') }}" required/>
+        <input type="date" name="start_date" id="startDate" class="form-input" min=""/> value="{{ old('start_date') }}" required/>
       </div>
       <div class="form-group">
         <label>Tanggal Pulang *</label>
-        <input type="date" name="end_date" class="form-input" value="{{ old('end_date') }}" required/>
+        <input type="date" name="end_date" id="endDate" class="form-input" min=""/> value="{{ old('end_date') }}" required/>
       </div>
     </div>
     <div class="form-row">
@@ -67,6 +69,36 @@
       <button type="submit" class="btn-primary"><i class="ti ti-check"></i> Simpan Trip</button>
       <a href="{{ route('trips.index') }}" class="btn-outline">Batal</a>
     </div>
-  </form>
-</div>
+</form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+
+    if (startDate) {
+      startDate.min = todayStr;
+      startDate.addEventListener('change', function () {
+        if (!this.value) {
+          endDate.min = todayStr;
+          return;
+        }
+
+        endDate.min = this.value;
+        if (endDate.value && endDate.value < this.value) {
+          endDate.value = this.value;
+        }
+      });
+    }
+
+    if (endDate) {
+      endDate.min = todayStr;
+    }
+  });
+</script>
+
 @endsection

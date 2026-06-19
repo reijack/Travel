@@ -94,7 +94,7 @@
 
 <div class="trip-hero">
   <div>
-    <h2>{{ $trip->trip_name }} 🌴</h2>
+    <h2>{{ $trip->trip_name }} </h2>
     <div class="th-meta">
       <span><i class="ti ti-map-pin"></i> {{ $trip->destination }}</span>
       <span><i class="ti ti-calendar"></i> {{ \Carbon\Carbon::parse($trip->start_date)->format('d M Y') }} – {{ \Carbon\Carbon::parse($trip->end_date)->format('d M Y') }}</span>
@@ -417,11 +417,13 @@
       @csrf
       <div class="form-group">
         <label>Pilih Foto *</label>
-        <input type="file" name="image" class="form-input" accept="image/*" required/>
+        <input type="file" name="image" class="form-input"
+          accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+          required/>
       </div>
       <div class="form-group">
         <label>Caption</label>
-        <input type="text" name="caption" class="form-input" placeholder="Cth: Sunset di Kuta 🌅"/>
+        <input type="text" name="caption" class="form-input" placeholder="Cth: Sunset di Kuta "/>
       </div>
       <button type="submit" class="btn-primary"><i class="ti ti-upload"></i> Upload</button>
     </form>
@@ -546,7 +548,12 @@
       <div class="modal-body">
         <div class="form-group">
           <label>Nama Item *</label>
-          <input type="text" name="item_name" id="editCheckName" class="form-input" required/>
+          <input type="text" name="item_name" id="editCheckName" class="form-input" required
+            maxlength="60"
+            pattern="[A-Za-z\s]+"
+            title="Hanya huruf dan spasi yang diperbolehkan"
+            oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')"
+          />
         </div>
         <div class="form-group" style="margin:0">
           <label>Keterangan</label>
@@ -571,9 +578,14 @@
       <div class="modal-title">Edit Caption Foto</div>
       <button class="modal-close" onclick="closeModal('modalPhoto')"><i class="ti ti-x"></i></button>
     </div>
-    <form id="formEditPhoto" method="POST">
+    <form id="formEditPhoto" method="POST" enctype="multipart/form-data">
       @csrf @method('PUT')
       <div class="modal-body">
+        <div class="form-group">
+          <label>Foto Baru (opsional)</label>
+          <input type="file" name="image" class="form-input"
+            accept=".png,.jpg,.jpeg,image/png,image/jpeg"/>
+        </div>
         <div class="form-group" style="margin:0">
           <label>Caption</label>
           <input type="text" name="caption" id="editPhotoCaption" class="form-input"/>

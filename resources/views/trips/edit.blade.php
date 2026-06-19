@@ -3,15 +3,18 @@
 @section('page-title','Edit Trip')
 
 @section('content')
-<div class="page-header">
-  <div>
-    <h1 class="page-h1">Edit Trip ✏️</h1>
-    <p class="page-sub">Ubah detail rencana perjalanan</p>
+<form action="{{ route('trips.update', $trip) }}" method="POST">
+  @csrf
+  @method('PUT')
+  <div class="page-header">
+    <div>
+      <h1 class="page-h1">Edit Trip ✏️</h1>
+      <p class="page-sub">Ubah detail rencana perjalanan</p>
+    </div>
+    <a href="{{ route('trips.show',$trip) }}" class="btn-outline"><i class="ti ti-arrow-left"></i> Kembali</a>
   </div>
-  <a href="{{ route('trips.show',$trip) }}" class="btn-outline"><i class="ti ti-arrow-left"></i> Kembali</a>
-</div>
 
-<div class="form-group">
+  <div class="form-group">
   <label>Nama Trip *</label>
   <input type="text" name="trip_name" class="form-input"
     value="{{ old('trip_name',$trip->trip_name) }}"
@@ -62,6 +65,36 @@
       <button type="submit" class="btn-primary"><i class="ti ti-check"></i> Update Trip</button>
       <a href="{{ route('trips.show',$trip) }}" class="btn-outline">Batal</a>
     </div>
-  </form>
-</div>
+</form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const startDate = document.querySelector('input[name="start_date"]');
+    const endDate = document.querySelector('input[name="end_date"]');
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+
+    if (startDate) {
+      startDate.min = todayStr;
+      startDate.addEventListener('change', function () {
+        if (!this.value) {
+          endDate.min = todayStr;
+          return;
+        }
+
+        endDate.min = this.value;
+        if (endDate.value && endDate.value < this.value) {
+          endDate.value = this.value;
+        }
+      });
+    }
+
+    if (endDate) {
+      endDate.min = todayStr;
+    }
+  });
+</script>
+
 @endsection

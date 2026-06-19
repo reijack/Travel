@@ -29,7 +29,9 @@ class ChecklistController extends Controller
 
     public function update(Request $request, Checklist $checklist)
     {
-        $request->validate(['item_name' => 'required|string|max:255']);
+        $request->validate([
+            'item_name' => ['required', 'string', 'regex:/^[A-Za-z\s]+$/', 'max:255'],
+        ]);
 
         $checklist->update([
             'item_name' => $request->item_name,

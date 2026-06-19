@@ -47,7 +47,7 @@
   </div>
   <div class="card">
     <h1>Selamat datang kembali</h1>
-    <p class="sub">Masuk untuk melanjutkan perjalananmu 🌍</p>
+    <p class="sub">Masuk untuk melanjutkan perjalananmu </p>
     <form method="POST" action="{{ route('login') }}">
       @csrf
       <label>Email</label>

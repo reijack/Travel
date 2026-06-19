@@ -11,7 +11,10 @@ class PhotoController extends Controller
 {
     public function store(Request $request, Trip $trip)
     {
-        $request->validate(['image' => 'required|image|max:5120']);
+        $request->validate([
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
+            'caption' => ['nullable', 'string', 'max:255'],
+        ]);
 
         $path = $request->file('image')->store('photos', 'public');
 
@@ -25,8 +28,23 @@ class PhotoController extends Controller
 
     public function update(Request $request, Photo $photo)
     {
-        $photo->update(['caption' => $request->caption]);
-        return back()->with('success', 'Caption berhasil diupdate!');
+        $request->validate([
+            'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
+            'caption' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->delete($photo->image_path);
+            $photo->image_path = $request->file('image')->store('photos', 'public');
+        }
+
+        if ($request->filled('caption')) {
+            $photo->caption = $request->caption;
+        }
+
+        $photo->save();
+
+        return back()->with('success', 'Foto berhasil diupdate!');
     }
 
     public function destroy(Photo $photo)
