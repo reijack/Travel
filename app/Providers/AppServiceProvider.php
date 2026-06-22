@@ -18,5 +18,9 @@ class AppServiceProvider extends ServiceProvider
             $view->with('sidebarTrips', \App\Models\Trip::latest()->take(5)->get());
         }
     });
+
+    if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
 }
 }
