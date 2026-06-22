@@ -31,6 +31,9 @@
     input:focus{outline:none;border-color:var(--sage);background:#fff;
                 box-shadow:0 0 0 3px rgba(82,121,111,.15)}
     .err{color:#B91C1C;font-size:12px;margin-top:-12px;margin-bottom:12px}
+    .forgot-link{text-align:right;margin-top:-8px;margin-bottom:16px}
+    .forgot-link a{font-size:13px;color:var(--forest);text-decoration:none;font-weight:500}
+    .forgot-link a:hover{text-decoration:underline}
     .btn{width:100%;padding:11px;background:var(--forest);color:#fff;
          border:none;border-radius:8px;font-size:15px;font-weight:500;
           font-family:var(--ff-body);cursor:pointer;transition:background .18s}
@@ -57,6 +60,10 @@
       <label>Password</label>
       <input type="password" name="password" required/>
       @error('password') <p class="err">{{ $message }}</p> @enderror
+
+      <div class="forgot-link">
+        <a href="{{ route('password.request') }}">Lupa password?</a>
+      </div>
 
       <button class="btn" type="submit">Masuk</button>
     </form>
