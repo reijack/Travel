@@ -13,6 +13,11 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
 {
+    if (env('APP_ENV') === 'production') {
+        \URL::forceScheme('https');
+    }
+
+    
     \View::composer('*', function ($view) {
         if (\Illuminate\Support\Facades\Auth::check()) {
             $view->with('sidebarTrips', \App\Models\Trip::latest()->take(5)->get());
