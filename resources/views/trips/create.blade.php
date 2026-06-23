@@ -40,11 +40,11 @@
     <div class="form-row">
       <div class="form-group">
         <label>Tanggal Berangkat *</label>
-        <input type="date" name="start_date" id="startDate" class="form-input" min=""/> value="{{ old('start_date') }}" required/>
+        <input type="date" name="start_date" id="startDate" class="form-input" min=""/> 
       </div>
       <div class="form-group">
         <label>Tanggal Pulang *</label>
-        <input type="date" name="end_date" id="endDate" class="form-input" min=""/> value="{{ old('end_date') }}" required/>
+        <input type="date" name="end_date" id="endDate" class="form-input" min=""/> 
       </div>
     </div>
     <div class="form-row">
