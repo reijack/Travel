@@ -62,7 +62,6 @@
       <select name="status" class="form-input">
         <option value="planned">Planned</option>
         <option value="upcoming">Upcoming</option>
-        <option value="done">Done</option>
       </select>
     </div>
     <div style="display:flex;gap:10px">
