@@ -13,6 +13,7 @@ class ItineraryController extends Controller
         $request->validate([
             'activity' => 'required|string|max:255',
             'day'      => 'required|integer',
+            'time'     => 'nullable|date_format:H:i',
         ]);
 
         $trip->itineraries()->create([
@@ -31,6 +32,7 @@ class ItineraryController extends Controller
     {
         $request->validate([
             'activity' => 'required|string|max:255',
+            'time'     => 'nullable|date_format:H:i',
         ]);
 
         $itinerary->update([

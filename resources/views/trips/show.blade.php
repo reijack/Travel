@@ -129,7 +129,7 @@
     <div class="act-list">
       @forelse($dayActs as $act)
       <div class="act-item">
-        <div class="act-time">{{ $act->time ? substr($act->time,0,5) : '—' }}</div>
+        <div class="act-time">{{ $act->time ? \Carbon\Carbon::parse($act->time)->format('H:i') : '—' }}</div>
         <div class="act-dot" style="background:{{ ['pantai'=>'#185FA5','budaya'=>'#534AB7','alam'=>'#3B6D11','wisata'=>'#52796F','kuliner'=>'#854F0B','belanja'=>'#E09F3E','transport'=>'#9A9890'][$act->category] ?? '#ccc' }}"></div>
         <div class="act-info">
           <div class="act-name">{{ $act->activity }}</div>
@@ -139,7 +139,7 @@
         <span class="act-tag tag-{{ $act->category }}">{{ ucfirst($act->category) }}</span>
         <div style="display:flex;gap:4px;margin-left:8px">
           <button type="button" class="btn-outline sm" style="padding:5px 8px"
-            onclick="openEditAct({{ $act->id }},'{{ addslashes($act->activity) }}','{{ $act->time ? substr($act->time,0,5) : '' }}','{{ addslashes($act->location ?? '') }}','{{ $act->category }}','{{ addslashes($act->notes ?? '') }}')">
+            onclick="openEditAct({{ $act->id }},'{{ addslashes($act->activity) }}','{{ $act->time ? \Carbon\Carbon::parse($act->time)->format('H:i') : '' }}','{{ addslashes($act->location ?? '') }}','{{ $act->category }}','{{ addslashes($act->notes ?? '') }}')">
             <i class="ti ti-edit"></i>
           </button>
           <form action="{{ route('itineraries.destroy',$act) }}" method="POST">
