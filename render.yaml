@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: travel-app
+    runtime: docker
+    plan: starter
+    region: singapore
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: "Travel Planner"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false # set to your Render URL, e.g. https://travel-app.onrender.com
+      - key: APP_KEY
+        sync: false # run `php artisan key:generate --show` locally and paste the output
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        sync: false # Supabase connection pooler host
+      - key: DB_PORT
+        value: "6543" # Supabase transaction pooler port
+      - key: DB_DATABASE
+        value: postgres
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSLMODE
+        value: require
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: MAIL_MAILER
+        value: resend
+      - key: RESEND_KEY
+        sync: false
+      - key: MAIL_FROM_ADDRESS
+        value: onboarding@resend.dev
+      - key: MAIL_FROM_NAME
+        value: "Travel Planner"

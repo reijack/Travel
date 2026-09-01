@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
     $middleware->alias([
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ]);
+    // Render sits behind a reverse proxy/load balancer, so trust it for
+    // correct scheme (https) and client IP detection.
+    $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
