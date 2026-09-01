@@ -43,6 +43,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
     && docker-php-ext-install pdo pdo_pgsql pgsql mbstring zip exif pcntl bcmath gd \
     && a2enmod rewrite \
+    && a2dismod mpm_event mpm_worker 2>/dev/null || true \
+    && a2enmod mpm_prefork \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
