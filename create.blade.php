@@ -1,0 +1,103 @@
+@extends('layouts.app')
+@section('title','Buat Trip Baru')
+@section('page-title','Buat Trip Baru')
+
+@section('content')
+<form action="{{ route('trips.store') }}" method="POST">
+  @csrf
+  <div class="page-header">
+    <div>
+      <h1 class="page-h1">Buat Trip Baru </h1>
+      <p class="page-sub">Isi detail rencana perjalananmu</p>
+    </div>
+    <a href="{{ route('trips.index') }}" class="btn-outline"><i class="ti ti-arrow-left"></i> Kembali</a>
+  </div>
+
+  <div class="form-group">
+  <label>Nama Trip *</label>
+  <input type="text" name="trip_name" class="form-input"
+    placeholder="Cth: Liburan ke Bali"
+    value="{{ old('trip_name') }}"
+    pattern="[A-Za-z\s]+"
+    oninput="this.value=this.value.replace(/[^A-Za-z\s]/g,'')"
+    maxlength="20"
+    required/>
+  @error('trip_name')<div class="form-error">{{ $message }}</div>@enderror
+</div>
+
+<div class="form-group">
+  <label>Destinasi *</label>
+  <input type="text" name="destination" class="form-input"
+    placeholder="Cth: Bali, Indonesia"
+    value="{{ old('destination') }}"
+    pattern="[A-Za-z\s,]+"
+    oninput="this.value=this.value.replace(/[^A-Za-z\s,]/g,'')"
+    maxlength="20"
+    required/>
+  @error('destination')<div class="form-error">{{ $message }}</div>@enderror
+</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tanggal Berangkat *</label>
+        <input type="date" name="start_date" id="startDate" class="form-input" min=""/> 
+      </div>
+      <div class="form-group">
+        <label>Tanggal Pulang *</label>
+        <input type="date" name="end_date" id="endDate" class="form-input" min=""/> 
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Jumlah Orang</label>
+        <input type="number" name="people" class="form-input" min="1" max="50" value="{{ old('people',2) }}"/>
+      </div>
+      <div class="form-group">
+        <label>Total Budget (Rp)</label>
+        <input type="number" name="budget" class="form-input" placeholder="Cth: 2000000" value="{{ old('budget') }}"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select name="status" class="form-input">
+        <option value="planned">Planned</option>
+        <option value="upcoming">Upcoming</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button type="submit" class="btn-primary"><i class="ti ti-check"></i> Simpan Trip</button>
+      <a href="{{ route('trips.index') }}" class="btn-outline">Batal</a>
+    </div>
+</form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+
+    if (startDate) {
+      startDate.min = todayStr;
+      startDate.addEventListener('change', function () {
+        if (!this.value) {
+          endDate.min = todayStr;
+          return;
+        }
+
+        endDate.min = this.value;
+        if (endDate.value && endDate.value < this.value) {
+          endDate.value = this.value;
+        }
+      });
+    }
+
+    if (endDate) {
+      endDate.min = todayStr;
+    }
+  });
+</script>
+
+@endsection
